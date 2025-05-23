@@ -6,18 +6,15 @@ import 'screens/login_screen.dart';
 void main() {
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-    ],)
+      child: MyApp(),
+      providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+    ),
   );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginScreen(),
-      debugShowCheckedModeBanner: false,
-    );
+    return MaterialApp(home: LoginScreen(), debugShowCheckedModeBanner: false);
   }
 }

@@ -51,12 +51,16 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(_errorMessage!, style: TextStyle(color: Colors.red)),
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(
+                labelText: 'Email'
+                ),
             ),
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(labelText: 'Senha'),
+              decoration: InputDecoration(
+                labelText: 'Senha'
+                ),
             ),
             SizedBox(height: 20),
             _isLoading
