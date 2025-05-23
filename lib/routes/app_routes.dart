@@ -1,17 +1,8 @@
-import 'package:flutter/material.dart';
-
-class AppRoutes extends StatefulWidget {
-  const AppRoutes({super.key});
-
-  @override
-  State<AppRoutes> createState() => _AppRoutesState();
-}
-
-class _AppRoutesState extends State<AppRoutes> {
+class AppRoutes {
   static const login = '/login';
   static const confirmLogin = '/confirm-login';
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
+  static const catalog = '/catalog';
+  static const productDetail = '/product-detail';
+  static const cart = '/cart';
+  static const checkout = '/checkout';
 }
