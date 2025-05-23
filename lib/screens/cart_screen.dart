@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
-import '../widgets/cart_item_tile.dart';
+import '../widgets/product_tile.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});

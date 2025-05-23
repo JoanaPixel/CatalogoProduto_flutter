@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'providers/auth_provider.dart';
 import 'providers/cart_provider.dart';
 import 'screens/login_screen.dart';
-import 'screens/catalog_page.dart';
-import 'screens/cart_page.dart';
+import 'screens/catalog_screen.dart';
+import 'screens/cart_screen.dart';
 
 void main() {
   runApp(
@@ -33,11 +33,6 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
         scaffoldBackgroundColor: const Color(0xFFF5F5F5),
         useMaterial3: true,
-      ),
-      home: Consumer<AuthProvider>(
-        builder: (context, auth, _) {
-          return auth.isLoggedIn ? const RootPage() : const LoginScreen();
-        },
       ),
     );
   }
