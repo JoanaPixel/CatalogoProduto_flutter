@@ -1,0 +1,48 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "aplicativo_teste",
+            "cwd": "Users\\joana_schifter\\Documents\\aplicativo_teste",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "aplicativo_teste (profile mode)",
+            "cwd": "Users\\joana_schifter\\Documents\\aplicativo_teste",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "aplicativo_teste (release mode)",
+            "cwd": "Users\\joana_schifter\\Documents\\aplicativo_teste",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "CatalogoProduto_flutter",
+            "cwd": "Users\\joana_schifter\\Documents\\CatalogoProduto_flutter",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "CatalogoProduto_flutter (profile mode)",
+            "cwd": "Users\\joana_schifter\\Documents\\CatalogoProduto_flutter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "CatalogoProduto_flutter (release mode)",
+            "cwd": "Users\\joana_schifter\\Documents\\CatalogoProduto_flutter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

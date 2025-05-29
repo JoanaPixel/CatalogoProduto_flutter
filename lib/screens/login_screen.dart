@@ -1,8 +1,9 @@
+import 'package:catalogo_produto/screens/confirm_login_screen.dart';
 import 'package:catalogo_produto/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'success_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -52,14 +53,21 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
               controller: _emailController,
               decoration: InputDecoration(
-                labelText: 'Email'
+                labelText: 'Email *',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.email)
                 ),
             ),
+            
+            const SizedBox(height: 24),
+
             TextField(
               controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
-                labelText: 'Senha'
+                labelText: 'Senha *',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.key)
                 ),
             ),
             SizedBox(height: 20),
