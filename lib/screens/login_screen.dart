@@ -1,17 +1,17 @@
+import 'package:catalogo_produto/providers/auth_provider.dart';
 import 'package:catalogo_produto/screens/confirm_login_screen.dart';
-import 'package:catalogo_produto/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
-
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
 
   bool _isLoading = false;
   String? _errorMessage;
@@ -22,20 +22,22 @@ class _LoginScreenState extends State<LoginScreen> {
       _errorMessage = null;
     });
 
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-    final success = await _authService.login(email, password);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final success = await authProvider.login(
+      _emailController.text.trim(),
+      _passwordController.text.trim(),
+    );
 
     setState(() => _isLoading = false);
 
     if (success) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SuccessScreen()),
+        MaterialPageRoute(builder: (_) => SuccessScreen()),
       );
     } else {
       setState(() {
-        _errorMessage = "Usuário ou senha inválidos.";
+        _errorMessage = "Login inválido. Tente novamente.";
       });
     }
   }
@@ -43,41 +45,103 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            if (_errorMessage != null)
-              Text(_errorMessage!, style: TextStyle(color: Colors.red)),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Email *',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email)
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black, Colors.red],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 60),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                'Bem-vindo de volta!',
+                style: GoogleFonts.poppins(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
-            ),
-            
-            const SizedBox(height: 24),
-
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Senha *',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.key)
+              ),
+              const SizedBox(height: 40),
+              if (_errorMessage != null)
+                Text(
+                  _errorMessage!,
+                  style: const TextStyle(color: Colors.redAccent),
                 ),
-            ),
-            SizedBox(height: 20),
-            _isLoading
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: _login,
-                    child: Text('Entrar'),
+              const SizedBox(height: 20),
+              _buildInputField(
+                controller: _emailController,
+                hintText: 'Email',
+                icon: Icons.email,
+              ),
+              const SizedBox(height: 20),
+              _buildInputField(
+                controller: _passwordController,
+                hintText: 'Senha',
+                icon: Icons.lock,
+                obscureText: true,
+              ),
+              const SizedBox(height: 30),
+              _isLoading
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: _login,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.redAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: const Text(
+                          'Entrar',
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                    ),
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                },
+                child: Text(
+                  "Não tem uma conta? Cadastre-se",
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    decoration: TextDecoration.underline,
                   ),
-          ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputField({
+    required TextEditingController controller,
+    required String hintText,
+    required IconData icon,
+    bool obscureText = false,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: obscureText,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.black.withOpacity(0.2),
+        hintText: hintText,
+        hintStyle: const TextStyle(color: Colors.white70),
+        prefixIcon: Icon(icon, color: Colors.white),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
         ),
       ),
     );

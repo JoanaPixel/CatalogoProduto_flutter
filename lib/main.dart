@@ -3,8 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'providers/auth_provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://nwglraloxlyxdojlvyfp.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53Z2xyYWxveGx5eGRvamx2eWZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NTgwMDAsImV4cCI6MjA2NDEzNDAwMH0.KLUymMBwSWtqs4lvRqU42t2vpfMoVoQIbpaAV71WFpA'
+  );
+
   runApp(
     MultiProvider(
       providers: [
@@ -22,11 +30,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Catálogo Fake Store',
+      title: 'Catálogo E-commerce',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        textTheme: GoogleFonts.poppinsTextTheme(),
-        scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.black,
+        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
         useMaterial3: true,
       ),
       home: LoginScreen(),

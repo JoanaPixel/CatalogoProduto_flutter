@@ -41,6 +41,8 @@ dependencies:
   http: ^1.1.0
   cached_network_image: ^3.3.1
   google_fonts: ^6.1.0
+  supabase_auth_ui: ^0.5.5
+  flutter_secure_storage: ^9.2.4
 
 dev_dependencies:
   flutter_test:
