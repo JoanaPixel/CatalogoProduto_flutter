@@ -46,9 +46,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        height: double.infinity,
+        width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.black, Colors.red],
+            colors: [Colors.black, Colors.redAccent],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -56,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 60),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Bem-vindo de volta!',
@@ -66,48 +69,86 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 40),
+
               if (_errorMessage != null)
                 Text(
                   _errorMessage!,
                   style: const TextStyle(color: Colors.redAccent),
                 ),
+
               const SizedBox(height: 20),
-              _buildInputField(
+
+              TextFormField(
                 controller: _emailController,
-                hintText: 'Email',
-                icon: Icons.email,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: 'Email *',
+                  labelStyle: const TextStyle(color: Colors.white),
+                  filled: true,
+                  fillColor: Colors.black.withOpacity(0.2),
+                  prefixIcon: const Icon(Icons.email, color: Colors.white),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                validator: (String? value) {
+                  return (value == null || !value.contains('@'))
+                      ? 'O campo deve conter o caractere @.'
+                      : null;
+                },
               ),
+
               const SizedBox(height: 20),
-              _buildInputField(
+
+              TextFormField(
                 controller: _passwordController,
-                hintText: 'Senha',
-                icon: Icons.lock,
                 obscureText: true,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: 'Senha *',
+                  labelStyle: const TextStyle(color: Colors.white),
+                  filled: true,
+                  fillColor: Colors.black.withOpacity(0.2),
+                  prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                validator: (String? value) {
+                  return (value == null && value!.isNotEmpty)
+                      ? 'Senha inválida'
+                      : null;
+                },
               ),
+
               const SizedBox(height: 30),
+
               _isLoading
                   ? const CircularProgressIndicator(color: Colors.white)
                   : SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: _login,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        child: const Text(
-                          'Entrar',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _login,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
+                      child: const Text(
+                        'Entrar',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
                     ),
+                  ),
+
               const SizedBox(height: 20),
+
               TextButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: Text(
                   "Não tem uma conta? Cadastre-se",
                   style: GoogleFonts.poppins(
@@ -115,33 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: TextDecoration.underline,
                   ),
                 ),
-              )
+              ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInputField({
-    required TextEditingController controller,
-    required String hintText,
-    required IconData icon,
-    bool obscureText = false,
-  }) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.black.withOpacity(0.2),
-        hintText: hintText,
-        hintStyle: const TextStyle(color: Colors.white70),
-        prefixIcon: Icon(icon, color: Colors.white),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide.none,
         ),
       ),
     );
