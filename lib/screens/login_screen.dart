@@ -10,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -78,49 +79,61 @@ class _LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 20),
 
-              TextFormField(
-                controller: _emailController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: 'Email *',
-                  labelStyle: const TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Colors.black.withOpacity(0.2),
-                  prefixIcon: const Icon(Icons.email, color: Colors.white),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                validator: (String? value) {
-                  return (value == null || !value.contains('@'))
-                      ? 'O campo deve conter o caractere @.'
-                      : null;
-                },
-              ),
+              /// 🔒 Formulário com validações
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _emailController,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        labelText: 'Email *',
+                        labelStyle: const TextStyle(color: Colors.white),
+                        filled: true,
+                        fillColor: Colors.black.withOpacity(0.2),
+                        prefixIcon: const Icon(Icons.email, color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'O email não pode estar vazio.';
+                        }
+                        if (!value.contains('@')) {
+                          return 'Insira um email válido com @';
+                        }
+                        return null;
+                      },
+                    ),
 
-              const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-              TextFormField(
-                controller: _passwordController,
-                obscureText: true,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: 'Senha *',
-                  labelStyle: const TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Colors.black.withOpacity(0.2),
-                  prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
+                    TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        labelText: 'Senha *',
+                        labelStyle: const TextStyle(color: Colors.white),
+                        filled: true,
+                        fillColor: Colors.black.withOpacity(0.2),
+                        prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      validator: (String? value) {
+                        return (value == null || value.isEmpty)
+                            ? 'A senha não pode estar vazia.'
+                            : null;
+                      },
+                    ),
+                  ],
                 ),
-                validator: (String? value) {
-                  return (value == null && value!.isNotEmpty)
-                      ? 'Senha inválida'
-                      : null;
-                },
               ),
 
               const SizedBox(height: 30),
@@ -128,27 +141,33 @@ class _LoginScreenState extends State<LoginScreen> {
               _isLoading
                   ? const CircularProgressIndicator(color: Colors.white)
                   : SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: _login,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _login();
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.redAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: const Text(
+                          'Entrar',
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                       ),
-                      child: const Text(
-                        'Entrar',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
                     ),
-                  ),
 
               const SizedBox(height: 20),
 
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Ir para a tela de cadastro, se tiver
+                },
                 child: Text(
                   "Não tem uma conta? Cadastre-se",
                   style: GoogleFonts.poppins(
