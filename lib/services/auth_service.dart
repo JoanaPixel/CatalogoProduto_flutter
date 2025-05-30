@@ -14,7 +14,7 @@ class AuthService {
 
       if (response.user != null) {
         await _storage.write(
-          key: 'sessão',
+          key: 'session',
           value: response.session?.toJson().toString(),
         );
         return true;
@@ -28,11 +28,11 @@ class AuthService {
 
   Future<void> logout() async {
     await _client.auth.signOut();
-    await _storage.delete(key: 'sessão');
+    await _storage.delete(key: 'session');
   }
 
   Future<bool> restoreSession() async {
-    final sessionStr = await _storage.read(key: 'sessão');
+    final sessionStr = await _storage.read(key: 'session');
     
     if (sessionStr != null) {
       final response = await _client.auth.recoverSession(sessionStr!);
