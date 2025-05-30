@@ -32,11 +32,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Catálogo E-commerce',
       theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
-        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
-        useMaterial3: true,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: Colors.black,
+      textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+      colorScheme: const ColorScheme.dark(
+      primary: Colors.redAccent,
+      secondary: Colors.red,
+      background: Colors.black,
+        ),
+      useMaterial3: true,
       ),
       home: LoginScreen(),
     );
