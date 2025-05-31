@@ -70,8 +70,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
 
+              const SizedBox(height: 40),
+
               Text(
-                'Criar Conta',
+                'Sign Up',
                 style: GoogleFonts.poppins(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -93,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    
+
                     TextFormField(
                       controller: _emailController,
                       style: const TextStyle(color: Colors.white),

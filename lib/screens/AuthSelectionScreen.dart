@@ -39,7 +39,7 @@ class AuthSelectionScreen extends StatelessWidget {
                   minimumSize: const Size(double.infinity, 50),
                 ),
                 child: const Text(
-                  "Criar uma conta",
+                  "Cadastrar-se",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -58,7 +58,7 @@ class AuthSelectionScreen extends StatelessWidget {
                   side: const BorderSide(color: Colors.redAccent),
                   minimumSize: const Size(double.infinity, 50),
                 ),
-                child: const Text("Entrar com conta existente"),
+                child: const Text("Entrar"),
               ),
 
               const Spacer(),
