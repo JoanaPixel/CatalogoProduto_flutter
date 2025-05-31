@@ -4,6 +4,7 @@
 
 */
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../services/auth_service.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -30,5 +31,18 @@ class AuthProvider with ChangeNotifier {
     final restored = await _authService.restoreSession();
     _logado = restored;
     notifyListeners();
+  }
+
+  Future<bool> register(String email, String password) async {
+    try {
+      final response = await Supabase.instance.client.auth.signUp(
+        email: email,
+        password: password,
+      );
+      return response.user != null;
+    } catch (e) {
+      print('Erro ao registrar: $e');
+      return false;
+    }
   }
 }

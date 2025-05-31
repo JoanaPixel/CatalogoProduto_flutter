@@ -1,15 +1,16 @@
 import 'package:catalogo_produto/providers/auth_provider.dart';
-import 'package:catalogo_produto/screens/confirm_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -17,14 +18,14 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   String? _errorMessage;
 
-  void _login() async {
+  void _register() async {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
 
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final success = await authProvider.login(
+    final success = await authProvider.register(
       _emailController.text.trim(),
       _passwordController.text.trim(),
     );
@@ -32,13 +33,10 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = false);
 
     if (success) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => SuccessScreen()),
-      );
+      Navigator.pop(context); // volta para login após registrar
     } else {
       setState(() {
-        _errorMessage = "Login inválido. Tente novamente.";
+        _errorMessage = "Falha ao registrar. Tente novamente.";
       });
     }
   }
@@ -61,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              
+
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
@@ -73,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               Text(
-                'Sign In',
+                'Criar Conta',
                 style: GoogleFonts.poppins(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -95,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    
                     TextFormField(
                       controller: _emailController,
                       style: const TextStyle(color: Colors.white),
@@ -112,12 +111,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'O email não pode estar vazio.';
-                        }
-                        if (!value.contains('@')) {
-                          return 'Insira um email válido com @';
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            !value.contains('@')) {
+                          return 'Insira um email válido.';
                         }
                         return null;
                       },
@@ -140,10 +138,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      validator: (String? value) {
-                        return (value == null || value.isEmpty)
-                            ? 'A senha não pode estar vazia.'
-                            : null;
+                      validator: (value) {
+                        if (value == null || value.length < 6) {
+                          return 'A senha deve ter pelo menos 6 caracteres.';
+                        }
+                        return null;
                       },
                     ),
                   ],
@@ -160,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          _login();
+                          _register();
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -170,26 +169,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       child: const Text(
-                        'Entrar',
+                        'Cadastrar',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ),
-
-              const SizedBox(height: 20),
-
-              TextButton(
-                onPressed: () {
-                  // Ir para a tela de cadastro, se tiver
-                },
-                child: Text(
-                  "Não tem uma conta? Cadastre-se",
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
             ],
           ),
         ),
