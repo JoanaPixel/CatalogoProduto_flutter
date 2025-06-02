@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
+  final supabase = Supabase.instance.client;
   final SupabaseClient _client = Supabase.instance.client;
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
@@ -33,12 +34,23 @@ class AuthService {
 
   Future<bool> restoreSession() async {
     final sessionStr = await _storage.read(key: 'session');
-    
+
     if (sessionStr != null) {
       final response = await _client.auth.recoverSession(sessionStr!);
       return response.session != null;
     }
     return false;
+  }
+
+  Future<void> signInWithGoogle() async {
+    try {
+      await supabase.auth.signInWithOAuth(
+        OAuthProvider.google,
+        redirectTo: 'io.seuapp.id://callback',
+      );
+    } catch (e) {
+      throw Exception('Erro ao fazer login com Google: $e');
+    }
   }
 
   bool isLoggedIn() {

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       title: 'Velory Market',
       theme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
         textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
         colorScheme: const ColorScheme.dark(
           primary: Colors.redAccent,
