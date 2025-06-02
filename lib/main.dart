@@ -52,6 +52,9 @@ class MyApp extends StatelessWidget {
           authProvider.isLoggedIn
               ? const CatalogScreen()
               : const AuthSelectionScreen(),
+      routes: { // rotas pós login
+        '/catalog': (context) => const CatalogScreen(),
+        },
     );
   }
 }
