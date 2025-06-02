@@ -1,4 +1,5 @@
 import 'package:catalogo_produto/providers/auth_provider.dart';
+import 'package:catalogo_produto/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +60,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
@@ -95,7 +95,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-
                     TextFormField(
                       controller: _emailController,
                       style: const TextStyle(color: Colors.white),
@@ -113,11 +112,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null ||
-                            value.isEmpty ||
-                            !value.contains('@')) {
-                          return 'Insira um email válido.';
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'O email não pode estar vazio.';
+                        }
+                        if (!value.contains('@')) {
+                          return 'Insira um email válido com @';
                         }
                         return null;
                       },
@@ -176,6 +176,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
+              
+              const SizedBox(height: 30),
+
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (_) => LoginScreen()),
+                    );
+                },
+                child: Text(
+                  "Tem uma conta? Entrar",
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:catalogo_produto/providers/auth_provider.dart';
+import 'package:catalogo_produto/screens/RegisterScreen.dart';
 import 'package:catalogo_produto/screens/confirm_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -142,10 +143,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      validator: (String? value) {
-                        return (value == null || value.isEmpty)
-                            ? 'A senha não pode estar vazia.'
-                            : null;
+                      validator: (value) {
+                        if (value == null || value.length < 6) {
+                          return 'A senha deve ter pelo menos 6 caracteres.';
+                        }
+                        return null;
                       },
                     ),
                   ],
@@ -153,7 +155,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 30),
-
+              
+              // botão de entrar
               _isLoading
                   ? const CircularProgressIndicator(color: Colors.white)
                   : SizedBox(
@@ -180,12 +183,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 20),
 
+              // botão para mudar de tela para outra se não tem cadastro
               TextButton(
                 onPressed: () {
-                  // Ir para a tela de cadastro, se tiver
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (_) => RegisterScreen()),
+                    );
                 },
                 child: Text(
-                  "Não tem uma conta? Cadastre-se",
+                  "Não tem uma conta? Cadastrar-se",
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     decoration: TextDecoration.underline,

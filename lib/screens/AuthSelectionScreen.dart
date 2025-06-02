@@ -31,7 +31,7 @@ class AuthSelectionScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const RegisterScreen()),
+                    MaterialPageRoute(builder: (_) => LoginScreen ()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -39,7 +39,7 @@ class AuthSelectionScreen extends StatelessWidget {
                   minimumSize: const Size(double.infinity, 50),
                 ),
                 child: const Text(
-                  "Cadastrar-se",
+                  "Entrar",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -50,7 +50,7 @@ class AuthSelectionScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => LoginScreen()),
+                    MaterialPageRoute(builder: (_) => RegisterScreen()),
                   );
                 },
                 style: OutlinedButton.styleFrom(
@@ -58,7 +58,7 @@ class AuthSelectionScreen extends StatelessWidget {
                   side: const BorderSide(color: Colors.redAccent),
                   minimumSize: const Size(double.infinity, 50),
                 ),
-                child: const Text("Entrar"),
+                child: const Text("Cadastrar-se"),
               ),
 
               const Spacer(),
