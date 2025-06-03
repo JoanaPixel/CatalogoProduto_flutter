@@ -42,17 +42,6 @@ class AuthService {
     return false;
   }
 
-  Future<void> signInWithGoogle() async {
-    try {
-      await supabase.auth.signInWithOAuth(
-        OAuthProvider.google,
-        redirectTo: 'io.seuapp.id://callback',
-      );
-    } catch (e) {
-      throw Exception('Erro ao fazer login com Google: $e');
-    }
-  }
-
   bool isLoggedIn() {
     return _client.auth.currentUser != null;
   }

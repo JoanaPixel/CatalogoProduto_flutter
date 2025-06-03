@@ -44,18 +44,5 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// Login com conta do Google (OAuth)
-  Future<void> loginWithGoogle({required BuildContext context}) async {
-    try {
-      await Supabase.instance.client.auth.signInWithOAuth(
-        OAuthProvider.google,
-        redirectTo: 'io.velory.market://callback',
-      );
-    } catch (e) {
-      debugPrint('Erro no login com Google: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao entrar com Google: $e')),
-      );
-    }
-  }
+
 }

@@ -1,8 +1,6 @@
-import 'package:catalogo_produto/providers/auth_provider.dart';
 import 'package:catalogo_produto/screens/RegisterScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'login_screen.dart';
 
 class AuthSelectionScreen extends StatelessWidget {
@@ -67,42 +65,6 @@ class AuthSelectionScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-
-              // Botão de login com Google
-              OutlinedButton.icon(
-                onPressed: () {
-                  final authProvider = Provider.of<AuthProvider>(
-                    context,
-                    listen: false,
-                  );
-                  authProvider.loginWithGoogle(context: context);
-                },
-                icon: Image.asset(
-                  'assets/images/google_icon.png',
-                  height: 24,
-                  width: 24,
-                  fit: BoxFit.contain,
-                ),
-                label: const Padding(
-                  padding: EdgeInsets.only(
-                    left: 12,
-                  ),
-                  child: Text(
-                    "Google",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 50),
-                  side: const BorderSide(color: Color(0xFF9D2323)),
-                  foregroundColor: const Color(0xFF9D2323),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                ),
-              ),
-
               const Spacer(),
             ],
           ),

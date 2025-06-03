@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'providers/auth_provider.dart';
 import 'screens/AuthSelectionScreen.dart';
 import 'screens/catalog_screen.dart'; // tela pós login
@@ -38,13 +37,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Velory Market',
       theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
-        colorScheme: const ColorScheme.dark(
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: GoogleFonts.poppinsTextTheme(),
+        colorScheme: ColorScheme.light(
           primary: Colors.redAccent,
           secondary: Colors.red,
-          background: Colors.black,
+          background: Colors.white,
         ),
         useMaterial3: true,
       ),
@@ -52,9 +51,7 @@ class MyApp extends StatelessWidget {
           authProvider.isLoggedIn
               ? const CatalogScreen()
               : const AuthSelectionScreen(),
-      routes: { // rotas pós login
-        '/catalog': (context) => const CatalogScreen(),
-        },
+      routes: {'/catalog': (context) => const CatalogScreen()},
     );
   }
 }
