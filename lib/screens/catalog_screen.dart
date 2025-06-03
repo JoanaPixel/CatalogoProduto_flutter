@@ -50,9 +50,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
         child: ListView(
           children: [
             Text("Hello", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+
             SizedBox(height: 4),
+
             Text("Welcome to Laza.", style: TextStyle(color: Colors.grey[600])),
             SizedBox(height: 16),
+            
             Row(
               children: [
                 Expanded(
@@ -72,6 +75,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   ),
                 ),
                 SizedBox(width: 8),
+
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.red[700],
