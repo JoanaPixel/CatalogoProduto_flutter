@@ -62,7 +62,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
@@ -155,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 30),
-              
+
               // botão de entrar
               _isLoading
                   ? const CircularProgressIndicator(color: Colors.white)
@@ -187,9 +186,9 @@ class _LoginScreenState extends State<LoginScreen> {
               TextButton(
                 onPressed: () {
                   Navigator.push(
-                    context, 
+                    context,
                     MaterialPageRoute(builder: (_) => RegisterScreen()),
-                    );
+                  );
                 },
                 child: Text(
                   "Não tem uma conta? Cadastrar-se",

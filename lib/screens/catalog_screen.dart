@@ -21,7 +21,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 
   Future<void> fetchProducts() async {
-    final url = Uri.parse('https://api.escuelajs.co/api/v1/products?offset=0&limit=10');
+    final url = Uri.parse(
+      'https://api.escuelajs.co/api/v1/products?offset=0&limit=10',
+    );
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -39,10 +41,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: Icon(Icons.menu, color: Colors.black),
+
         actions: [
           Icon(Icons.shopping_bag_outlined, color: Colors.black),
           SizedBox(width: 16),
         ],
+
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -50,12 +54,15 @@ class _CatalogScreenState extends State<CatalogScreen> {
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ListView(
           children: [
-            Text("Hello", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+            Text(
+              "Olá",
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
             SizedBox(height: 4),
 
-            Text("Welcome to Laza.", style: TextStyle(color: Colors.grey[600])),
+            Text("Bem vindo ao Velory Market.", style: TextStyle(color: Colors.grey[600])),
             SizedBox(height: 16),
-            
+
             Row(
               children: [
                 Expanded(
@@ -69,7 +76,14 @@ class _CatalogScreenState extends State<CatalogScreen> {
                       children: [
                         Icon(Icons.search, color: Colors.grey),
                         SizedBox(width: 8),
-                        Expanded(child: TextField(decoration: InputDecoration(border: InputBorder.none, hintText: "Search..."))),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Buscar...",
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -90,7 +104,10 @@ class _CatalogScreenState extends State<CatalogScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("New Arrival", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                Text(
+                  "New Arrival",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
                 Text("View All", style: TextStyle(color: Colors.grey)),
               ],
             ),
@@ -98,58 +115,64 @@ class _CatalogScreenState extends State<CatalogScreen> {
             products.isEmpty
                 ? Center(child: CircularProgressIndicator())
                 : GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: products.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                      childAspectRatio: 0.65,
-                    ),
-                    itemBuilder: (context, index) {
-                      final product = products[index];
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: Colors.grey[100],
-                        ),
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.network(
-                                    product['images'][0],
-                                    height: 150,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 8,
-                                  right: 8,
-                                  child: Icon(Icons.favorite_border, color: Colors.grey),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              product['title'],
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(height: 4),
-                            Text('\$${product['price']}', style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      );
-                    },
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: products.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 0.65,
                   ),
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.grey[100],
+                      ),
+                      padding: EdgeInsets.all(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                  product['images'][0],
+                                  height: 150,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: Icon(
+                                  Icons.favorite_border,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            product['title'],
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            '\$${product['price']}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
           ],
         ),
       ),
@@ -160,7 +183,10 @@ class _CatalogScreenState extends State<CatalogScreen> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined), label: ""),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined),
+            label: "",
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
         ],
       ),

@@ -48,13 +48,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.black, Colors.redAccent],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 60),
         child: SingleChildScrollView(
           child: Column(
@@ -176,15 +169,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-              
+
               const SizedBox(height: 30),
 
               TextButton(
                 onPressed: () {
                   Navigator.push(
-                    context, 
+                    context,
                     MaterialPageRoute(builder: (_) => LoginScreen()),
-                    );
+                  );
                 },
                 child: Text(
                   "Tem uma conta? Entrar",
