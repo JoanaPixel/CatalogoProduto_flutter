@@ -29,6 +29,7 @@ class SuccessScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
+              
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/catalog');
