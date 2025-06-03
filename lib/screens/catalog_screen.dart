@@ -36,8 +36,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: Icon(Icons.menu, color: Colors.white),
+        leading: Icon(Icons.menu, color: Colors.black),
         actions: [
           Icon(Icons.shopping_bag_outlined, color: Colors.black),
           SizedBox(width: 16),
@@ -50,7 +51,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
         child: ListView(
           children: [
             Text("Hello", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-
             SizedBox(height: 4),
 
             Text("Welcome to Laza.", style: TextStyle(color: Colors.grey[600])),
