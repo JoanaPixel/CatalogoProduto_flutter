@@ -50,13 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.black, Colors.redAccent],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 60),
         child: SingleChildScrollView(
           child: Column(
@@ -65,7 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -74,12 +70,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 40),
 
-              Text(
-                'Velory Market',
-                style: GoogleFonts.poppins(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              Center(
+                child: Text(
+                  'Bem vindo ao Velory Market',
+                  style: GoogleFonts.poppins(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
 
@@ -99,19 +96,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     TextFormField(
                       controller: _emailController,
-                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: 'Email *',
-                        labelStyle: const TextStyle(color: Colors.white),
-                        filled: true,
-                        fillColor: Colors.black.withOpacity(0.2),
                         prefixIcon: const Icon(
                           Icons.email,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       validator: (String? value) {
@@ -129,17 +121,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     TextFormField(
                       controller: _passwordController,
-                      obscureText: true,
-                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        labelText: 'Senha *',
-                        labelStyle: const TextStyle(color: Colors.white),
-                        filled: true,
-                        fillColor: Colors.black.withOpacity(0.2),
-                        prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                        labelText: 'Senha ',
+                        prefixIcon: const Icon(
+                          Icons.lock,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       validator: (value) {

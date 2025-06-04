@@ -13,6 +13,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _usuarioController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -53,10 +54,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // navigator para voltar telas
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -65,12 +70,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               const SizedBox(height: 40),
 
-              Text(
-                'Sign Up',
-                style: GoogleFonts.poppins(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              Center(
+                child: Text(
+                  "Cadastro",
+                  style: GoogleFonts.poppins(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
 
@@ -89,20 +95,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: _emailController,
-                      style: const TextStyle(color: Colors.white),
+                      controller: _usuarioController,
                       decoration: InputDecoration(
-                        labelText: 'Email *',
-                        labelStyle: const TextStyle(color: Colors.white),
-                        filled: true,
-                        fillColor: Colors.black.withOpacity(0.2),
+                        labelText: 'Usuário ',
                         prefixIcon: const Icon(
-                          Icons.email,
-                          color: Colors.white,
+                          Icons.people,
+                          color: Colors.black,
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'O usuário precisa de nome.';
+                        }
+                        return null;
+                      },
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email ',
+                        prefixIcon: const Icon(
+                          Icons.email,
+                          color: Colors.black,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       validator: (String? value) {
@@ -120,17 +143,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     TextFormField(
                       controller: _passwordController,
-                      obscureText: true,
-                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        labelText: 'Senha *',
-                        labelStyle: const TextStyle(color: Colors.white),
-                        filled: true,
-                        fillColor: Colors.black.withOpacity(0.2),
-                        prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                        labelText: 'Senha ',
+                        prefixIcon: const Icon(Icons.lock, color: Colors.black),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       validator: (value) {
@@ -146,46 +163,61 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               const SizedBox(height: 30),
 
-              _isLoading
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _register();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: const Text(
-                        'Cadastrar',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed:
+                      _isLoading
+                          ? null
+                          : () {
+                            if (_formKey.currentState!.validate()) {
+                              _register();
+                            }
+                          },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red[700],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
+                  child:
+                      _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                            'Cadastrar',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                ),
+              ),
 
               const SizedBox(height: 30),
 
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => LoginScreen()),
-                  );
-                },
-                child: Text(
-                  "Tem uma conta? Entrar",
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    decoration: TextDecoration.underline,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Já possui uma conta?"),
+                  GestureDetector(
+                    /* utilizo onTap para detectar qualquer toques/taps genéricos 
+                    em qualquer widget (não apenas botões) */
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => LoginScreen()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 24),
+                      child: Text(
+                        "Entrar",
+                        style: TextStyle(
+                          color: Colors.red[700],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
