@@ -2,11 +2,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
-  final supabase = Supabase.instance.client;
   final SupabaseClient _client = Supabase.instance.client;
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
-  Future<bool> login(String email, String senha) async {
+  // Login com email e senha
+  Future<bool> signIn(String email, String senha) async {
     try {
       final response = await _client.auth.signInWithPassword(
         email: email,
@@ -27,21 +27,47 @@ class AuthService {
     }
   }
 
-  Future<void> logout() async {
+  // Registro com email, senha e criação do perfil na tabela `profiles`
+  Future<bool> signUp(String email, String senha, String username) async {
+    try {
+      final response = await _client.auth.signUp(email: email, password: senha);
+
+      final user = response.user;
+
+      if (user != null) {
+        await _client.from('profiles').insert({
+          'id': user.id,
+          'username': username,
+          'created_at': DateTime.now().toIso8601String(),
+        });
+
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print('Erro ao registrar: $e');
+      return false;
+    }
+  }
+
+  // Logout e limpeza da sessão local
+  Future<void> singOut() async {
     await _client.auth.signOut();
     await _storage.delete(key: 'session');
   }
 
+  // Restaura sessão salva no dispositivo
   Future<bool> restoreSession() async {
     final sessionStr = await _storage.read(key: 'session');
 
     if (sessionStr != null) {
-      final response = await _client.auth.recoverSession(sessionStr!);
+      final response = await _client.auth.recoverSession(sessionStr);
       return response.session != null;
     }
     return false;
   }
 
+  // Verifica se o usuário está logado
   bool isLoggedIn() {
     return _client.auth.currentUser != null;
   }

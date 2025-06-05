@@ -30,6 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final success = await authProvider.register(
       _emailController.text.trim(),
       _passwordController.text.trim(),
+      _usuarioController.text.trim(), // Passando username aqui
     );
 
     setState(() => _isLoading = false);
@@ -54,22 +55,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // navigator para voltar telas
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
                   icon: const Icon(
-                    Icons.arrow_back,
-                    color: Color.fromARGB(255, 0, 0, 0),
-                  ),
+                    Icons.arrow_back, 
+                    color: Colors.black),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
               ),
-
               const SizedBox(height: 40),
-
               Center(
                 child: Text(
                   "Cadastro",
@@ -79,29 +76,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 40),
-
               if (_errorMessage != null)
                 Text(
                   _errorMessage!,
                   style: const TextStyle(color: Colors.redAccent),
                 ),
-
               const SizedBox(height: 20),
 
+              // Formulário de cadastro
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
+
+                    // Campo de usuário
                     TextFormField(
                       controller: _usuarioController,
-                      decoration: InputDecoration(
-                        labelText: 'Usuário ',
-                        prefixIcon: const Icon(
-                          Icons.people,
-                          color: Colors.black,
-                        ),
+                      decoration: const InputDecoration(
+                        labelText: 'Usuário',
+                        prefixIcon: Icon(
+                          Icons.people, 
+                          color: Colors.black),
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -113,14 +109,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     const SizedBox(height: 20),
 
+                    // Campo de email
                     TextFormField(
                       controller: _emailController,
-                      decoration: InputDecoration(
-                        labelText: 'Email ',
-                        prefixIcon: const Icon(
-                          Icons.email,
-                          color: Colors.black,
-                        ),
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: Icon(
+                          Icons.email, 
+                          color: Colors.black),
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -135,15 +131,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     const SizedBox(height: 20),
 
+                    // Campo de senha
                     TextFormField(
                       controller: _passwordController,
-                      // oculta o que está digitando
+                      // oculta o que está digitand
                       obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'Senha ',
-                        prefixIcon: const Icon(Icons.lock, color: Colors.black),
+                      decoration: const InputDecoration(
+                        labelText: 'Senha',
+                        prefixIcon: Icon(Icons.lock, color: Colors.black),
                       ),
-                      validator: (value) {
+                      validator: (String? value) {
                         if (value == null || value.length < 6) {
                           return 'A senha deve ter pelo menos 6 caracteres.';
                         }
@@ -156,6 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               const SizedBox(height: 30),
 
+              // Botão de cadastrar
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -169,7 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                           },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF9D2323),
+                    backgroundColor: const Color(0xFF9D2323),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -185,12 +183,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               const SizedBox(height: 30),
-
+              // Botão para navegar para a tela de login
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text("Já possui uma conta?"),
                   GestureDetector(
+
                     /* utilizo onTap para detectar qualquer toques/taps genéricos 
                     em qualquer widget (não apenas botões) */
                     onTap: () {
@@ -199,7 +198,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         MaterialPageRoute(builder: (_) => LoginScreen()),
                       );
                     },
-                    child: Padding(
+                    child: const Padding(
                       padding: EdgeInsets.only(left: 6),
                       child: Text(
                         "Entrar",
