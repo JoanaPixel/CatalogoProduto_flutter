@@ -55,18 +55,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back, 
-                    color: Colors.black),
+
+              AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.black),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
               ),
+
               const SizedBox(height: 40),
+
               Center(
                 child: Text(
                   "Cadastro",
@@ -76,7 +79,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 40),
+
               if (_errorMessage != null)
                 Text(
                   _errorMessage!,
@@ -89,15 +94,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-
                     // Campo de usuário
                     TextFormField(
                       controller: _usuarioController,
                       decoration: const InputDecoration(
                         labelText: 'Usuário',
-                        prefixIcon: Icon(
-                          Icons.people, 
-                          color: Colors.black),
+                        prefixIcon: Icon(Icons.people, color: Colors.black),
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -114,9 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _emailController,
                       decoration: const InputDecoration(
                         labelText: 'Email',
-                        prefixIcon: Icon(
-                          Icons.email, 
-                          color: Colors.black),
+                        prefixIcon: Icon(Icons.email, color: Colors.black),
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -183,13 +183,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               const SizedBox(height: 30),
+              
               // Botão para navegar para a tela de login
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text("Já possui uma conta?"),
                   GestureDetector(
-
                     /* utilizo onTap para detectar qualquer toques/taps genéricos 
                     em qualquer widget (não apenas botões) */
                     onTap: () {
