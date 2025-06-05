@@ -18,7 +18,7 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Cart',
+          'Carrinho',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -114,7 +114,7 @@ class CartScreen extends StatelessWidget {
                     const SizedBox(height: 24),
 
                     // Endereço
-                    buildSectionTitle("Delivery Address"),
+                    buildSectionTitle("Endereço de Entrega"),
                     buildCardRow(
                       Icons.location_on,
                       "Rua Fictícia 123, Centro\nCidade XYZ - 00000-000",
@@ -123,15 +123,15 @@ class CartScreen extends StatelessWidget {
                     const SizedBox(height: 16),
 
                     // Pagamento
-                    buildSectionTitle("Payment Method"),
-                    buildCardRow(Icons.credit_card, "Visa Classic\n**** 1234"),
+                    buildSectionTitle("Método de Pagamento"),
+                    buildCardRow(Icons.credit_card, "Visa Classic\n**** 8273"),
 
                     const SizedBox(height: 16),
 
                     // Order Info
-                    buildSectionTitle("Order Info"),
+                    buildSectionTitle("Informações do Pedido"),
                     buildAmountRow("Subtotal", subtotal),
-                    buildAmountRow("Shipping cost", shippingCost),
+                    buildAmountRow("Custo de envio", shippingCost),
                     buildAmountRow("Total", total, bold: true),
                   ],
                 ),
@@ -152,7 +152,7 @@ class CartScreen extends StatelessWidget {
             );
           },
           child: const Text(
-            "Checkout",
+            "Confirmar Pedido",
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
