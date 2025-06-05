@@ -9,14 +9,13 @@ class CheckoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Align(
-        alignment: const Alignment(0, -0.3),
+        alignment: const Alignment(0, 0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset("images/pagamento.png", height: 200),
+            Image.asset("images/pagamento.png", height: 240),
 
             const SizedBox(height: 30),
-
             Text(
               "Pedido Confirmado!",
               style: GoogleFonts.inter(
