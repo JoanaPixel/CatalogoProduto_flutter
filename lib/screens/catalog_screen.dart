@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'product_detail_screen.dart'; // importa a tela de detalhes
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key});
@@ -35,18 +36,25 @@ class _CatalogScreenState extends State<CatalogScreen> {
     }
   }
 
+  void navigateToDetail(dynamic product) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductDetailScreen(product: product),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: Icon(Icons.menu, color: Colors.black),
-
         actions: [
           Icon(Icons.shopping_bag_outlined, color: Colors.black),
           SizedBox(width: 16),
         ],
-
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -54,15 +62,10 @@ class _CatalogScreenState extends State<CatalogScreen> {
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ListView(
           children: [
-            Text(
-              "Olá",
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-            ),
+            Text("Olá", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
             SizedBox(height: 4),
-
             Text("Bem vindo ao Velory Market.", style: TextStyle(color: Colors.grey[600])),
             SizedBox(height: 16),
-
             Row(
               children: [
                 Expanded(
@@ -89,7 +92,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   ),
                 ),
                 SizedBox(width: 8),
-
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.red[700],
@@ -104,10 +106,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "New Arrival",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
+                Text("New Arrival", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 Text("View All", style: TextStyle(color: Colors.grey)),
               ],
             ),
@@ -115,64 +114,64 @@ class _CatalogScreenState extends State<CatalogScreen> {
             products.isEmpty
                 ? Center(child: CircularProgressIndicator())
                 : GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: products.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    childAspectRatio: 0.65,
-                  ),
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.grey[100],
-                      ),
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Stack(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: products.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
+                      childAspectRatio: 0.65,
+                    ),
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      return GestureDetector(
+                        onTap: () => navigateToDetail(product),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.grey[100],
+                          ),
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.network(
-                                  product['images'][0],
-                                  height: 150,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
+                              Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.network(
+                                      product['images'][0],
+                                      height: 150,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 8,
+                                    right: 8,
+                                    child: Icon(Icons.favorite_border, color: Colors.grey),
+                                  ),
+                                ],
                               ),
-                              Positioned(
-                                top: 8,
-                                right: 8,
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.grey,
-                                ),
+                              SizedBox(height: 8),
+                              Text(
+                                product['title'],
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                '\$${product['price']}',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
-                          SizedBox(height: 8),
-                          Text(
-                            product['title'],
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            '\$${product['price']}',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                        ),
+                      );
+                    },
+                  ),
           ],
         ),
       ),
@@ -183,10 +182,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: ""),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            label: "",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
         ],
       ),
