@@ -125,9 +125,9 @@ Exemplo de resposta:
 
 | Nome      | Contato                          |
 |-----------|----------------------------------|
-|  Juscelino/TokyoSXR |  |
-|  Henrique ||
-|  Joana    ||
+|  Juscelino/TokyoSXR|https://github.com/TOKYOSXR   |
+|  Henrique          |https://github.com/HenriqueECM|
+|  Joana             |https://github.com/JoanaPixel |
 
 ---
 
