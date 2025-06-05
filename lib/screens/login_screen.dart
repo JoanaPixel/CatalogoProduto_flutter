@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       _isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
                           : const Text(
-                            'Cadastrar',
+                            'Entrar',
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                 ),
@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 6),
                       child: Text(
-                        "Entrar",
+                        "Cadastrar-se",
                         style: TextStyle(
                           color: Color(0xFF9D2323),
                           fontWeight: FontWeight.bold,

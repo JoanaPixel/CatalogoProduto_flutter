@@ -50,27 +50,36 @@ class _CatalogScreenState extends State<CatalogScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: Icon(Icons.menu, color: Colors.black),
+        // leading define o ícone ou widget do lado esquerdo da AppBar
+        leading: Icon(Icons.menu, color: Color(0xFF9D2323)),
+
+        // actions define uma lista de widgets do lado direito da AppBar.
         actions: [
-          Icon(Icons.shopping_bag_outlined, color: Colors.black),
+          Icon(Icons.shopping_cart_outlined, color: Color(0xFF9D2323)),
           SizedBox(width: 16),
         ],
+
         backgroundColor: Colors.transparent,
         elevation: 0,
+
       ),
+      // body define o conteúdo central da tela
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: ListView(
           children: [
+
             Text("Olá", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
             SizedBox(height: 4),
+
             Text("Bem vindo ao Velory Market.", style: TextStyle(color: Colors.grey[600])),
             SizedBox(height: 16),
+
             Row(
               children: [
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(12),
@@ -91,23 +100,14 @@ class _CatalogScreenState extends State<CatalogScreen> {
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.red[700],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: EdgeInsets.all(12),
-                  child: Icon(Icons.mic, color: Colors.white),
-                ),
               ],
             ),
             SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("New Arrival", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                Text("View All", style: TextStyle(color: Colors.grey)),
+                Text("Produtos", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                Text("Ver tudo", style: TextStyle(color: Colors.grey)),
               ],
             ),
             SizedBox(height: 12),
@@ -123,21 +123,29 @@ class _CatalogScreenState extends State<CatalogScreen> {
                       crossAxisSpacing: 16,
                       childAspectRatio: 0.65,
                     ),
+                    
                     itemBuilder: (context, index) {
+
                       final product = products[index];
+
                       return GestureDetector(
                         onTap: () => navigateToDetail(product),
                         child: Container(
+
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                             color: Colors.grey[100],
                           ),
+
                           padding: EdgeInsets.all(8),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+
+                            // mostrar os produtos no tela
                             children: [
                               Stack(
                                 children: [
+
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(12),
                                     child: Image.network(
@@ -147,6 +155,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
+
                                   Positioned(
                                     top: 8,
                                     right: 8,
@@ -154,6 +163,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                                   ),
                                 ],
                               ),
+
                               SizedBox(height: 8),
                               Text(
                                 product['title'],
@@ -161,10 +171,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontWeight: FontWeight.w500),
                               ),
+
                               SizedBox(height: 4),
                               Text(
                                 '\$${product['price']}',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9D2323)),
                               ),
                             ],
                           ),
@@ -175,9 +186,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ],
         ),
       ),
+
+      // bottomNavigationBar define o widget de navegação inferior
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
-        selectedItemColor: Colors.red[700],
+        selectedItemColor: Color(0xFF9D2323),
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),

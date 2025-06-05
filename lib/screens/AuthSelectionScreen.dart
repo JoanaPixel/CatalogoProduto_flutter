@@ -11,13 +11,13 @@ class AuthSelectionScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Spacer(),
 
-              Image.asset('images/logo.png', height: 120),
+              Image.asset('images/logo.png'),
 
               Text(
                 "Bem-vindo ao Velory Market",
