@@ -9,9 +9,13 @@ class SuccessScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.check_circle_outline, size: 200, color: const Color.fromARGB(255, 16, 189, 0)),
+            Image.asset(
+              "images/sucesso.png",
+              height: 200,
+            ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+
             Text(
               'Login realizado com sucesso!',
               style: GoogleFonts.poppins(

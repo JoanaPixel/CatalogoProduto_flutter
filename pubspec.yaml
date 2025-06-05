@@ -70,5 +70,6 @@ flutter:
   assets:
     - images/logo.png
     - images/sucesso.png
+    - images/pagamento.png
 
   # se caso tiver icons dentro do assets preciso fazer - assets/icons/

@@ -8,76 +8,38 @@ class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Align(
+        alignment: const Alignment(0, -0.3),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
+            Image.asset("images/pagamento.png", height: 200),
 
-            AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-
-            const Spacer(),
-
-            Image.asset("images/sucesso.png", height: 200),
-
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
             Text(
               "Pedido Confirmado!",
               style: GoogleFonts.inter(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1D1E20),
+                color: const Color(0xFF1D1E20),
               ),
               textAlign: TextAlign.center,
             ),
 
-            const Spacer(),
+            const SizedBox(height: 10),
 
             Text(
               "Seu pedido foi confirmado, enviaremos um e-mail de confirmação em breve.",
               style: GoogleFonts.inter(
                 fontSize: 15,
                 fontWeight: FontWeight.normal,
-                color: Color(0xFF8F959E),
+                color: const Color(0xFF8F959E),
               ),
+              textAlign: TextAlign.center,
             ),
 
-            const Spacer(),
-
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CheckoutScreen()) as Route<Object?>,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFF5F5F5),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30,
-                  vertical: 15,
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-              ),
-              child: const Text(
-                "Ir para Pedidos",
-                style: TextStyle(color: Color(0xFF8F959E)),
-              ),
-            ),
-
-            const Spacer(),
+            const SizedBox(height: 30),
           ],
         ),
       ),
@@ -92,16 +54,15 @@ class CheckoutScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16),
           ),
           onPressed: () {
-            Navigator.pushNamed(
+            Navigator.push(
               context,
-
-              MaterialPageRoute(builder: (context) => const CatalogScreen()) as String,
+              MaterialPageRoute(builder: (context) => const CatalogScreen()),
             );
           },
           child: const Text(
-            "Continuar Comprando", 
-            style: TextStyle(color: Colors.white, fontSize: 18)
-            ),
+            "Continuar Comprando",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
         ),
       ),
     );
