@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -5,7 +6,7 @@ class AuthService {
   final SupabaseClient _client = Supabase.instance.client;
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
-  // Login com email e senha
+  // // Login com email e senha
   Future<bool> signIn(String email, String senha) async {
     try {
       final response = await _client.auth.signInWithPassword(
@@ -14,10 +15,9 @@ class AuthService {
       );
 
       if (response.user != null) {
-        await _storage.write(
-          key: 'session',
-          value: response.session?.toJson().toString(),
-        );
+        // Serializa a sessão como JSON válido
+        final sessionJson = jsonEncode(response.session?.toJson());
+        await _storage.write(key: 'session', value: sessionJson);
         return true;
       }
       return false;
@@ -40,7 +40,6 @@ class AuthService {
           'username': username,
           'created_at': DateTime.now().toIso8601String(),
         });
-
         return true;
       }
       return false;
@@ -51,7 +50,7 @@ class AuthService {
   }
 
   // Logout e limpeza da sessão local
-  Future<void> singOut() async {
+  Future<void> signOut() async {
     await _client.auth.signOut();
     await _storage.delete(key: 'session');
   }
@@ -59,15 +58,14 @@ class AuthService {
   // Restaura sessão salva no dispositivo
   Future<bool> restoreSession() async {
     final sessionStr = await _storage.read(key: 'session');
-
     if (sessionStr != null) {
-      final response = await _client.auth.recoverSession(sessionStr);
+      final sessionJson = jsonDecode(sessionStr);
+      final response = await _client.auth.recoverSession(sessionJson);
       return response.session != null;
     }
     return false;
   }
 
-  // Verifica se o usuário está logado
   bool isLoggedIn() {
     return _client.auth.currentUser != null;
   }

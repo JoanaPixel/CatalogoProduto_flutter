@@ -4,7 +4,7 @@ import '../services/auth_service.dart';
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
 
-  bool _logado = false; // Armazena se o usuário está logado
+  bool _logado = false; // Estado do login
   bool get isLoggedIn => _logado;
 
   // Login com email e senha
@@ -15,7 +15,7 @@ class AuthProvider with ChangeNotifier {
     return sucesso;
   }
 
-  // Registrar com usuário, email e senha
+  // Registro com email, senha e username
   Future<bool> register(String email, String password, String username) async {
     final sucesso = await _authService.signUp(email, password, username);
     _logado = sucesso;
@@ -23,7 +23,7 @@ class AuthProvider with ChangeNotifier {
     return sucesso;
   }
 
-  // Tenta restaurar sessão salva
+  // Tenta restaurar sessão salva no storage seguro
   Future<void> tryAutoLogin() async {
     final restaurado = await _authService.restoreSession();
     _logado = restaurado;
@@ -32,7 +32,7 @@ class AuthProvider with ChangeNotifier {
 
   // Logout do usuário
   Future<void> logout() async {
-    await _authService.singOut();
+    await _authService.signOut();  // Corrigido para signOut()
     _logado = false;
     notifyListeners();
   }

@@ -145,7 +145,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                             children: [
                               Stack(
                                 children: [
-
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(12),
                                     child: Image.network(
@@ -186,7 +185,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ],
         ),
       ),
-
       // bottomNavigationBar define o widget de navegação inferior
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
