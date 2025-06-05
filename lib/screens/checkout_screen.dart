@@ -56,9 +56,9 @@ class CheckoutScreen extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CheckoutScreen()) as String,
+                  MaterialPageRoute(builder: (context) => const CheckoutScreen()) as Route<Object?>,
                 );
               },
               style: ElevatedButton.styleFrom(
