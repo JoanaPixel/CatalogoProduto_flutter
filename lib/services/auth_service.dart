@@ -58,7 +58,8 @@ class AuthService {
   // Restaura sessão salva no dispositivo
   Future<bool> restoreSession() async {
     final sessionStr = await _storage.read(key: 'session');
-    if (sessionStr != null) {
+    // acho que não está certo
+    if (sessionStr != null) { 
       final sessionJson = jsonDecode(sessionStr);
       final response = await _client.auth.recoverSession(sessionJson);
       return response.session != null;
