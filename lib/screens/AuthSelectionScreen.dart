@@ -17,7 +17,7 @@ class AuthSelectionScreen extends StatelessWidget {
             children: [
               const Spacer(),
 
-              Image.asset("images/logo.png", height: 100),
+              Image.asset('images/logo.png', height: 120),
 
               Text(
                 "Bem-vindo ao Velory Market",
