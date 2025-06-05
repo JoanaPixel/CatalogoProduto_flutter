@@ -102,9 +102,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.people,
                           color: Colors.black,
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -123,9 +120,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         prefixIcon: const Icon(
                           Icons.email,
                           color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       validator: (String? value) {
@@ -146,9 +140,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: InputDecoration(
                         labelText: 'Senha ',
                         prefixIcon: const Icon(Icons.lock, color: Colors.black),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
                       ),
                       validator: (value) {
                         if (value == null || value.length < 6) {
@@ -176,7 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                           },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red[700],
+                    backgroundColor: Color(0xFF9D2323),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -207,11 +198,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       );
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(left: 24),
+                      padding: EdgeInsets.only(left: 6),
                       child: Text(
                         "Entrar",
                         style: TextStyle(
-                          color: Colors.red[700],
+                          color: Color(0xFF9D2323),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

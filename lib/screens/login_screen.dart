@@ -102,9 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           Icons.email,
                           color: Colors.black,
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -127,9 +124,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           Icons.lock,
                           color: Color.fromARGB(255, 0, 0, 0),
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
                       ),
                       validator: (value) {
                         if (value == null || value.length < 6) {
@@ -145,47 +139,62 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 30),
 
               // botão de entrar
-              _isLoading
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _login();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: const Text(
-                        'Entrar',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed:
+                      _isLoading
+                          ? null
+                          : () {
+                            if (_formKey.currentState!.validate()) {
+                              _login();
+                            }
+                          },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF9D2323),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
+                  child:
+                      _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                            'Cadastrar',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                ),
+              ),
 
               const SizedBox(height: 20),
 
               // botão para mudar de tela para outra se não tem cadastro
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => RegisterScreen()),
-                  );
-                },
-                child: Text(
-                  "Não tem uma conta? Cadastrar-se",
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    decoration: TextDecoration.underline,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Não possui a conta?"),
+                  GestureDetector(
+                    /* utilizo onTap para detectar qualquer toques/taps genéricos 
+                    em qualquer widget (não apenas botões) */
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => RegisterScreen()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 6),
+                      child: Text(
+                        "Cadastrar-se",
+                        style: TextStyle(
+                          color: Color(0xFF9D2323),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
