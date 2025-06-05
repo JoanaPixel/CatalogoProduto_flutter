@@ -199,18 +199,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ],
         ),
       ),
-      // bottomNavigationBar define o widget de navegação inferior
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Color(0xFF9D2323),
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
-        ],
-      ),
     );
   }
 }
