@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/auth_provider.dart';
+import 'providers/cart_provider.dart';
 import 'screens/AuthSelectionScreen.dart';
 import 'screens/catalog_screen.dart'; // tela pós login
 
@@ -20,7 +21,10 @@ Future<void> main() async {
 
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => authProvider)],
+      providers: [ChangeNotifierProvider(create: (_) => authProvider),
+      ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
+      
       child: const MyApp(),
     ),
   );

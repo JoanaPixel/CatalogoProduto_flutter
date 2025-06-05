@@ -1,6 +1,7 @@
-// lib/product_detail_screen.dart
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/cart_provider.dart';
+import '../screens/cart_screen.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final dynamic product;
@@ -10,15 +11,21 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       body: Column(
         children: [
           Stack(
             children: [
-              Image.network(
-                product['images'][0],
-                width: double.infinity,
-                height: 300,
-                fit: BoxFit.cover,
+              Hero(
+                tag: 'product-${product['id']}',
+                child: AspectRatio(
+                  aspectRatio: 1.2, // Mantém a imagem mais proporcional
+                  child: Image.network(
+                    product['images'][0],
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               SafeArea(
                 child: Padding(
@@ -28,14 +35,24 @@ class ProductDetailScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
-                        child: CircleAvatar(
+                        child: const CircleAvatar(
                           backgroundColor: Colors.white,
                           child: Icon(Icons.arrow_back, color: Colors.black),
                         ),
                       ),
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Icon(Icons.shopping_bag_outlined, color: Colors.black),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Color(0xFF9D2323),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CartScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -45,41 +62,85 @@ class ProductDetailScreen extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: ListView(
                 children: [
-                  Text(
-                    product['title'],
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          product['title'],
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF333333),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "\$${product['price']}",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF9D2323),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    "Descrição",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "\$${product['price']}",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.redAccent),
+                    product['description'] ?? "Sem descrição disponível.",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey[700],
+                      height: 1.5,
+                    ),
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    product['description'] ?? "No description available.",
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
+                  const SizedBox(height: 100), // Espaço pro botão
                 ],
               ),
             ),
           ),
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.all(16),
-            child: SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red[700]),
-                child: Text("Adicionar ao carrinho", style: TextStyle(color: Colors.white, fontSize: 16)),
-              ),
-            ),
-          )
         ],
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 80,
+        child: ElevatedButton(
+          onPressed: () {
+            Provider.of<CartProvider>(context, listen: false).addItem(
+              id: product['id'].toString(),
+              title: product['title'],
+              price: (product['price'] as num).toDouble(),
+              imageUrl: product['images'][0],
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Produto adicionado ao carrinho!'),
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF9D2323),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
+          child: const Text(
+            "Adicionar ao carrinho",
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
       ),
     );
   }

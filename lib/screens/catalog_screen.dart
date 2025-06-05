@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'product_detail_screen.dart'; // importa a tela de detalhes
+import 'product_detail_screen.dart';
+import 'package:catalogo_produto/screens/cart_screen.dart'; // importa a tela de detalhes
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key});
@@ -48,12 +49,18 @@ class _CatalogScreenState extends State<CatalogScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        // leading define o ícone ou widget do lado esquerdo da AppBar
         leading: Icon(Icons.menu, color: Color(0xFF9D2323)),
 
-        // actions define uma lista de widgets do lado direito da AppBar.
         actions: [
-          Icon(Icons.shopping_cart_outlined, color: Color(0xFF9D2323)),
+          IconButton(
+            icon: Icon(Icons.shopping_cart_outlined, color: Color(0xFF9D2323)),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CartScreen()),
+              );
+            },
+          ),
           SizedBox(width: 16),
         ],
 
@@ -72,10 +79,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
             ),
             SizedBox(height: 4),
 
-            Text(
-              "Bem-vindo ao Velory Market.",
-              style: TextStyle(color: Colors.grey[600]),
-            ),
+            Text("Bem vindo ao Velory Market.", style: TextStyle(color: Colors.grey[600])),
             SizedBox(height: 16),
 
             Row(
@@ -145,19 +149,19 @@ class _CatalogScreenState extends State<CatalogScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
 
-                          // Mostrar os produtos na tela
-                          children: [
-                            Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.network(
-                                    product['images'][0],
-                                    height: 150,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
+                            // mostrar os produtos no tela
+                            children: [
+                              Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.network(
+                                      product['images'][0],
+                                      height: 150,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
 
                                 Positioned(
                                   top: 8,
@@ -195,9 +199,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ],
         ),
       ),
-
-      // ele fica fora do body, ou seja fora do corpo principal
-      // BottomNavigationBar define o widget de navegação inferior
+      // bottomNavigationBar define o widget de navegação inferior
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         selectedItemColor: Color(0xFF9D2323),
@@ -205,7 +207,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined),label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
         ],
       ),
