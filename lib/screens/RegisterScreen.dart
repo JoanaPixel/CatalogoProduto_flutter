@@ -137,6 +137,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     TextFormField(
                       controller: _passwordController,
+                      // oculta o que está digitando
+                      obscureText: true,
                       decoration: InputDecoration(
                         labelText: 'Senha ',
                         prefixIcon: const Icon(Icons.lock, color: Colors.black),
@@ -169,7 +171,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF9D2323),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   child:

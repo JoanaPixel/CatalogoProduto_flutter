@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   'Bem vindo ao Velory Market',
                   style: GoogleFonts.poppins(
-                    fontSize: 26,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -118,6 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     TextFormField(
                       controller: _passwordController,
+                      // oculta o que está digitando
+                      obscureText: true,
                       decoration: InputDecoration(
                         labelText: 'Senha ',
                         prefixIcon: const Icon(
@@ -154,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF9D2323),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   child:
