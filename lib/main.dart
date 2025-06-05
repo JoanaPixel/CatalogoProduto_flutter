@@ -1,3 +1,4 @@
+import 'package:catalogo_produto/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +14,8 @@ Future<void> main() async {
 
   await Supabase.initialize(
     url: 'https://nwglraloxlyxdojlvyfp.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53Z2xyYWxveGx5eGRvamx2eWZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NTgwMDAsImV4cCI6MjA2NDEzNDAwMH0.KLUymMBwSWtqs4lvRqU42t2vpfMoVoQIbpaAV71WFpA',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53Z2xyYWxveGx5eGRvamx2eWZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NTgwMDAsImV4cCI6MjA2NDEzNDAwMH0.KLUymMBwSWtqs4lvRqU42t2vpfMoVoQIbpaAV71WFpA',
   );
 
   final authProvider = AuthProvider();
@@ -53,16 +55,15 @@ class MyApp extends StatelessWidget {
       ),
       home: _buildHome(authProvider),
       routes: {
-        '/catalog': (context) => const CatalogScreen(),
+        AppRoutes.catalog: (context) => const CatalogScreen(),
+        AppRoutes.authSelection: (context) => const AuthSelectionScreen(),
       },
     );
   }
 
   Widget _buildHome(AuthProvider authProvider) {
     if (authProvider.isLoading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     } else if (authProvider.isLoggedIn) {
       return const CatalogScreen();
     } else {

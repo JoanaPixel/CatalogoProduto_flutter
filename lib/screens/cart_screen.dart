@@ -1,4 +1,5 @@
 import 'package:catalogo_produto/screens/checkout_screen.dart';
+import 'package:catalogo_produto/services/pedido_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
@@ -156,7 +157,8 @@ class CartScreen extends StatelessWidget {
             shadowColor: Colors.transparent,
             padding: const EdgeInsets.symmetric(vertical: 16),
           ),
-          onPressed: () {
+          onPressed: () async {
+            await limparCarrinho();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const CheckoutScreen()),

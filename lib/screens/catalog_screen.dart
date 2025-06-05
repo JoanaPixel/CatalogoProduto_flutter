@@ -1,3 +1,4 @@
+import 'package:catalogo_produto/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -38,24 +39,26 @@ class _CatalogScreenState extends State<CatalogScreen> {
     }
   }
 
+  // Funcionalidade para carregar o perfil
   Future<void> loadUserProfile() async {
-  final user = Supabase.instance.client.auth.currentUser;
-  if (user == null) return;
+    final user = Supabase.instance.client.auth.currentUser;
+    if (user == null) return;
 
-  final response = await Supabase.instance.client
-      .from('profiles')
-      .select()
-      .eq('id', user.id)
-      .maybeSingle();
+    final response =
+        await Supabase.instance.client
+            .from('profiles')
+            .select()
+            .eq('id', user.id)
+            .maybeSingle();
 
-  if (response != null) {
-    setState(() {
-      userProfile = response as Map<String, dynamic>;
-    });
-  } else {
-    print('Perfil não encontrado');
+    if (response != null) {
+      setState(() {
+        userProfile = response as Map<String, dynamic>;
+      });
+    } else {
+      print('Perfil não encontrado');
+    }
   }
-}
 
   void navigateToDetail(dynamic product) {
     Navigator.push(
@@ -69,23 +72,29 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Supabase.instance.client.auth.currentUser;
-    final userName = userProfile != null
-        ? (userProfile!['username'] ?? 'Usuário')
-        : 'Carregando...';
+
+    final userName =
+        userProfile != null
+            ? (userProfile!['username'] ?? 'Usuário')
+            : 'Carregando...';
     final userEmail = user?.email ?? '';
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: Color(0xFF9D2323)),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
+          builder:
+              (context) => IconButton(
+                icon: const Icon(Icons.menu, color: Color(0xFF9D2323)),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF9D2323)),
+            icon: const Icon(
+              Icons.shopping_cart_outlined,
+              color: Color(0xFF9D2323),
+            ),
             onPressed: () {
               Navigator.push(
                 context,
@@ -112,18 +121,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 ),
                 accountName: Text(userName),
                 accountEmail: Text(userEmail),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF9D2323),
-                ),
+                decoration: const BoxDecoration(color: Color(0xFF9D2323)),
               ),
-              ListTile(
-                leading: const Icon(Icons.person),
-                title: const Text('Perfil'),
-                onTap: () {
-                  // Adicione navegação para tela de perfil, se quiser
-                  Navigator.pop(context);
-                },
-              ),
+              
               ListTile(
                 leading: const Icon(Icons.shopping_cart),
                 title: const Text('Carrinho'),
@@ -135,14 +135,18 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   );
                 },
               ),
+
               const Spacer(),
+
               ListTile(
                 leading: const Icon(Icons.logout),
                 title: const Text('Sair'),
                 onTap: () async {
                   await Supabase.instance.client.auth.signOut();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/', (route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    AppRoutes.authSelection,
+                    (route) => false,
+                  );
                 },
               ),
             ],
@@ -210,84 +214,83 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 // Grid de produtos
                 products.isEmpty
                     ? const Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 40),
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: products.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 250,
-                          mainAxisSpacing: 16,
-                          crossAxisSpacing: 16,
-                          childAspectRatio: 0.65,
-                        ),
-                        itemBuilder: (context, index) {
-                          final product = products[index];
-
-                          return GestureDetector(
-                            onTap: () => navigateToDetail(product),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                color: Colors.grey[100],
-                              ),
-                              padding: const EdgeInsets.all(8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Stack(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          child: Image.network(
-                                            product['images'][0],
-                                            width: double.infinity,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        const Positioned(
-                                          top: 8,
-                                          right: 8,
-                                          child: Icon(
-                                            Icons.favorite_border,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    product['title'],
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '\$${product['price']}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      color: Color(0xFF9D2323),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 40),
+                        child: CircularProgressIndicator(),
                       ),
+                    )
+                    : GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: products.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 250,
+                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 16,
+                            childAspectRatio: 0.65,
+                          ),
+                      itemBuilder: (context, index) {
+                        final product = products[index];
+
+                        return GestureDetector(
+                          onTap: () => navigateToDetail(product),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.grey[100],
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: Image.network(
+                                          product['images'][0],
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      const Positioned(
+                                        top: 8,
+                                        right: 8,
+                                        child: Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  product['title'],
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  '\$${product['price']}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Color(0xFF9D2323),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
               ],
             ),
           ),
