@@ -9,7 +9,6 @@ import 'providers/cart_provider.dart';
 
 import 'screens/AuthSelectionScreen.dart';
 import 'screens/confirm_login_screen.dart';
-import 'screens/catalog_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

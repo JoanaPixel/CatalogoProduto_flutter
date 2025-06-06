@@ -1,4 +1,3 @@
-import 'package:catalogo_produto/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
