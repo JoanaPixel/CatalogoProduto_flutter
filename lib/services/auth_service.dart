@@ -70,13 +70,4 @@ class AuthService {
   bool isLoggedIn() {
     return _client.auth.currentUser != null;
   }
-
-  Future<void> limparCarrinho() async {
-  final userId = Supabase.instance.client.auth.currentUser!.id;
-
-  await Supabase.instance.client
-    .from('carrinho')
-    .delete()
-    .eq('user_id', userId);
-}
 }

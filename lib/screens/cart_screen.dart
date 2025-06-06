@@ -44,110 +44,115 @@ class CartScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: cartItems.isEmpty
-          ? const Center(child: Text("Seu carrinho está vazio."))
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  ...cartItems.map((item) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      padding: const EdgeInsets.all(12),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              item.imageUrl,
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
+      body:
+          cartItems.isEmpty
+              ? const Center(child: Text("Seu carrinho está vazio."))
+              : SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    ...cartItems.map((item) {
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                item.imageUrl,
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item.title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  '\$${item.price.toStringAsFixed(2)}',
-                                  style: const TextStyle(
-                                    color: Colors.redAccent,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.remove_circle_outline,
-                                      ),
-                                      onPressed: () {
-                                        cartProvider.decreaseQuantity(item.id);
-                                      },
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item.title,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                    Text('${item.quantity}'),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.add_circle_outline,
-                                      ),
-                                      onPressed: () {
-                                        cartProvider.increaseQuantity(item.id);
-                                      },
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '\$${item.price.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                      color: Colors.redAccent,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.remove_circle_outline,
+                                        ),
+                                        onPressed: () {
+                                          cartProvider.decreaseQuantity(
+                                            item.id,
+                                          );
+                                        },
+                                      ),
+                                      Text('${item.quantity}'),
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.add_circle_outline,
+                                        ),
+                                        onPressed: () {
+                                          cartProvider.increaseQuantity(
+                                            item.id,
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.delete_outline),
-                            onPressed: () {
-                              cartProvider.removeItem(item.id);
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                  const SizedBox(height: 24),
+                            IconButton(
+                              icon: const Icon(Icons.delete_outline),
+                              onPressed: () {
+                                cartProvider.removeItem(item.id);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                    const SizedBox(height: 24),
 
-                  // Endereço
-                  buildSectionTitle("Endereço de Entrega"),
-                  buildCardRow(
-                    Icons.location_on,
-                    "Rua Fictícia 123, Centro\nCidade XYZ - 00000-000",
-                  ),
+                    // Endereço
+                    buildSectionTitle("Endereço de Entrega"),
+                    buildCardRow(
+                      Icons.location_on,
+                      "Rua Fictícia 123, Centro\nCidade XYZ - 00000-000",
+                    ),
 
-                  const SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                  // Pagamento
-                  buildSectionTitle("Método de Pagamento"),
-                  buildCardRow(Icons.credit_card, "Visa Classic\n**** 8273"),
+                    // Pagamento
+                    buildSectionTitle("Método de Pagamento"),
+                    buildCardRow(Icons.credit_card, "Visa Classic\n**** 8273"),
 
-                  const SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                  // Informações do pedido
-                  buildSectionTitle("Informações do Pedido"),
-                  buildAmountRow("Subtotal", subtotal),
-                  buildAmountRow("Custo de envio", shippingCost),
-                  buildAmountRow("Total", total, bold: true),
-                ],
+                    // Informações do pedido
+                    buildSectionTitle("Informações do Pedido"),
+                    buildAmountRow("Subtotal", subtotal),
+                    buildAmountRow("Custo de envio", shippingCost),
+                    buildAmountRow("Total", total, bold: true),
+                  ],
+                ),
               ),
-            ),
       bottomNavigationBar: Container(
         color: const Color(0xFF9D2323),
         padding: const EdgeInsets.all(16),
@@ -158,12 +163,24 @@ class CartScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16),
           ),
           onPressed: () async {
+            final cartProvider = Provider.of<CartProvider>(
+              context,
+              listen: false,
+            );
+
+            // Limpa local
+            await cartProvider.clearCart();
+
+            // Limpa remoto
             await limparCarrinho();
+
+            // Vai para tela de checkout
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const CheckoutScreen()),
             );
           },
+
           child: const Text(
             "Confirmar Pedido",
             style: TextStyle(color: Colors.white, fontSize: 18),
