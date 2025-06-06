@@ -1,3 +1,4 @@
+import 'package:catalogo_produto/screens/catalog_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,7 +30,7 @@ class SuccessScreen extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/catalog');
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const CatalogScreen()));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF9D2323),
