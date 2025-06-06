@@ -2,9 +2,22 @@
 
 **Velory Market** é um aplicativo Flutter que simula um catálogo de produtos com integração à [Fake Store API da Platzi](https://api.escuelajs.co/docs/). O projeto utiliza **Supabase** para autenticação e gerenciamento de perfil, além de `flutter_secure_storage` para manter sessões seguras localmente.
 
+---
 
+## 👋 Comece Aqui
+
+Seja bem-vindo ao **Velory Market**! Para aproveitar todos os recursos do app, siga estes passos:
+
+1. **Abra o app** em seu dispositivo (ou rode localmente — veja [Como Rodar o Projeto](#️-como-rodar-o-projeto)).
+2. Na tela inicial, escolha **"Cadastrar-se"** para se registrar com seu usuario, e-mail e senha.
+3. Após o cadastro, você será redirecionado automaticamente para tela de confirmação e apenas clicar em continuar.
+4. Agora é só navegar, explorar os produtos, ver detalhes e adicionar ao carrinho!
+5. Acesse o **menu lateral** para ver seu perfil e fazer logout quando quiser.
+
+> O login é seguro e seus dados são armazenados com Supabase + `flutter_secure_storage`.
 
 ---
+
 
 ## 🚀 Funcionalidades
 
