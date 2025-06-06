@@ -5,6 +5,9 @@ import 'dart:convert';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'product_detail_screen.dart';
 import 'package:catalogo_produto/screens/cart_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
+import '../providers/auth_provider.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key});
@@ -39,7 +42,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
     }
   }
 
-  // Funcionalidade para carregar o perfil
   Future<void> loadUserProfile() async {
     final user = Supabase.instance.client.auth.currentUser;
     if (user == null) return;
@@ -72,7 +74,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Supabase.instance.client.auth.currentUser;
-
     final userName =
         userProfile != null
             ? (userProfile!['username'] ?? 'Usuário')
@@ -123,7 +124,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 accountEmail: Text(userEmail),
                 decoration: const BoxDecoration(color: Color(0xFF9D2323)),
               ),
-              
               ListTile(
                 leading: const Icon(Icons.shopping_cart),
                 title: const Text('Carrinho'),
@@ -135,18 +135,17 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   );
                 },
               ),
-
               const Spacer(),
-
               ListTile(
                 leading: const Icon(Icons.logout),
                 title: const Text('Sair'),
                 onTap: () async {
                   await Supabase.instance.client.auth.signOut();
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    AppRoutes.authSelection,
-                    (route) => false,
-                  );
+
+                  if (context.mounted) {
+                    context.read<AuthProvider>().logout();
+                    context.go('/auth');
+                  }
                 },
               ),
             ],
@@ -170,8 +169,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   style: TextStyle(color: Colors.grey),
                 ),
                 const SizedBox(height: 16),
-
-                // Campo de busca
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
@@ -194,8 +191,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-
-                // Título e botão ver tudo
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
@@ -210,8 +205,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   ],
                 ),
                 const SizedBox(height: 12),
-
-                // Grid de produtos
                 products.isEmpty
                     ? const Center(
                       child: Padding(
@@ -232,7 +225,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                           ),
                       itemBuilder: (context, index) {
                         final product = products[index];
-
                         return GestureDetector(
                           onTap: () => navigateToDetail(product),
                           child: Container(
